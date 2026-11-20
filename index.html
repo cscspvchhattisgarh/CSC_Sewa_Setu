@@ -4,41 +4,458 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CSC & Sewa Setu Branding Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      box-sizing: border-box;
+    * { font-family: 'Poppins', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      min-height: 100vh;
+      padding: 25px 12px;
+    }
+    .form-container {
+      max-width: 780px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(12px);
+      padding: 35px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    .header-box {
+      text-align: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+    .header-title {
+      background: linear-gradient(45deg, #003366, #0066cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 1.4rem;
       margin: 0;
-      padding: 0;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
-    body, html {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
+    .sub-title {
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 600;
+      margin-top: 4px;
     }
-    .iframe-container {
-      width: 100%;
-      height: 100vh;
+    .section-title {
+      background: linear-gradient(90deg, #003366 0%, #0055a5 100%);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,51,102,0.18);
+    }
+    .form-control, .form-select {
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      transition: all 0.25s ease-in-out;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #0055a5;
+      box-shadow: 0 0 0 0.25rem rgba(0, 85, 165, 0.18);
+    }
+    .form-label {
+      font-weight: 600;
+      color: #334155;
+      font-size: 0.88rem;
+      margin-bottom: 5px;
+    }
+    .download-box {
+      background: #f0f7ff;
+      border: 1.5px dashed #0055a5;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .btn-download {
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 8px 20px;
       border: none;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(16,185,129,0.25);
     }
-    iframe {
-      width: 100%;
-      height: 100%;
+    .btn-submit {
+      background: linear-gradient(90deg, #003366 0%, #0055a5 100%);
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 10px;
       border: none;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 6px 18px rgba(0, 51, 102, 0.25);
     }
+    #loadingSpinner {
+      text-align: center;
+      color: #003366;
+      font-weight: 600;
+      padding: 25px;
+    }
+    .gps-status { font-size: 0.85rem; font-weight: 600; margin-top: 6px; }
   </style>
 </head>
 <body>
+<iframe id="backendFrame" name="backendFrame" title="Form submission response" style="display:none"></iframe>
 
-  <div class="iframe-container">
-    <!-- Geolocation Permission ke saath Apps Script Embed -->
-    <iframe 
-      src="https://script.google.com/macros/s/AKfycbznxRi2TAlxOA1oZlwTBlylbW-KqQZap1fa5U2b-IZ65F3bjGPMQD1MiLZ7hadhZQe-/exec" 
-      allow="geolocation *;" 
-      title="CSC & Sewa Setu Branding Upload Form">
-    </iframe>
+<div class="form-container">
+  
+  <div class="header-box">
+    <h5 class="header-title">CSC & Sewa Setu</h5>
+    <div class="sub-title">Common Branding Upload Portal</div>
   </div>
+ 
+  <div class="download-box">
+    <div style="font-size: 0.92rem; color: #003366; font-weight: 600;" class="mb-2">
+      ब्रांडिंग का फॉर्मेट आप नीचे दिए गए लिंक से डाउनलोड कर सकते हैं:
+    </div>
+    <a href="https://drive.google.com/drive/folders/1H7BcClaf5uauj9nDPppomVMqJovdLn8X?usp=sharing" target="_blank" class="btn-download">
+      📥 Download Branding Format (Google Drive)
+    </a>
+  </div>
+
+  <div id="loadingSpinner">
+    <div class="spinner-border text-primary" role="status"></div>
+    <div class="mt-2">Master Data Loading... Please Wait...</div>
+  </div>
+
+  <form id="brandingForm" style="display: none;" onsubmit="handleFormSubmit(this); return false;">
+    
+    <div class="section-title">1. Location Details</div>
+    
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Location Type *</label>
+        <select class="form-select" name="locationType" id="locationType" required onchange="onLocationTypeChange()">
+          <option value="">Select Type</option>
+          <option value="RURAL">RURAL</option>
+          <option value="URBAN">URBAN</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">District *</label>
+        <select class="form-select" name="districtName" id="districtSelect" required onchange="onDistrictChange()">
+          <option value="">Select District</option>
+        </select>
+        <input type="hidden" name="districtCode" id="districtCode">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" id="blockLabel">Block / ULB *</label>
+        <select class="form-select" name="blockName" id="blockSelect" required onchange="onBlockChange()">
+          <option value="">Select Block</option>
+        </select>
+        <input type="hidden" name="blockCode" id="blockCode">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" id="gpLabel">Gram Panchayat / City *</label>
+        <select class="form-select" name="gpCityName" id="gpSelect" required onchange="onGpChange()">
+          <option value="">Select GP/City</option>
+        </select>
+        <input type="hidden" name="gpCityCode" id="gpCityCode">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label" id="villageLabel">Village / Ward *</label>
+        <select class="form-select" name="villageWardName" id="villageSelect" required onchange="onVillageChange()">
+          <option value="">Select Village/Ward</option>
+        </select>
+        <input type="hidden" name="villageWardCode" id="villageWardCode">
+      </div>
+    </div>
+
+    <div class="section-title">2. VLE & Center Details</div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">CSC ID *</label>
+        <input type="text" class="form-control" name="cscId" required placeholder="Enter CSC ID">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Sewa Setu ID *</label>
+        <input type="text" class="form-control" name="sewaSetuId" required placeholder="Enter Sewa Setu ID">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">VLE Name *</label>
+        <input type="text" class="form-control" name="vleName" required placeholder="Full Name">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Mobile Number *</label>
+        <input type="tel" pattern="[0-9]{10}" class="form-control" name="mobileNumber" required placeholder="10 Digit Mobile">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Email ID *</label>
+        <input type="email" class="form-control" name="emailId" required placeholder="Email Address">
+      </div>
+    </div>
+
+    <div class="section-title">3. GPS Location & Photo Upload</div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Latitude *</label>
+        <input type="text" class="form-control" name="latitude" id="latitude" readonly required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Longitude *</label>
+        <input type="text" class="form-control" name="longitude" id="longitude" readonly required>
+      </div>
+      <div class="col-12 text-center">
+        <button type="button" class="btn btn-sm btn-outline-primary mt-1" onclick="getLocation()">📍 Capture Current Location (GPS)</button>
+        <div id="gpsStatus" class="gps-status text-muted"></div>
+      </div>
+      
+      <div class="col-md-12">
+        <label class="form-label">Upload Branding Photo *</label>
+        <input type="file" class="form-control" name="photoFile" accept="image/*" required>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-submit" id="btnSubmit">Submit Data & Branding Photo</button>
+  </form>
+
+  <div id="responseMsg" class="mt-3 text-center fw-bold"></div>
+</div>
+
+<script>
+  let masterData = {};
+  let currentDataset = [];
+  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbznxRi2TAlxOA1oZlwTBlylbW-KqQZap1fa5U2b-IZ65F3bjGPMQD1MiLZ7hadhZQe-/exec';
+  let submitTimer = null;
+  let pendingRequestId = null;
+
+  window.addEventListener('message', function(event) {
+    if (!event.data || event.data.type !== 'sewasetu-submit' || event.data.requestId !== pendingRequestId) return;
+    clearTimeout(submitTimer);
+    const btn = document.getElementById('btnSubmit');
+    const msg = document.getElementById('responseMsg');
+    btn.disabled = false;
+    btn.innerText = 'Submit Data & Branding Photo';
+    const res = event.data.result || {};
+    if (res.success) {
+      msg.className = 'mt-3 text-center text-success fw-bold';
+      msg.innerText = '🎉 ' + res.message;
+      document.getElementById('brandingForm').reset();
+      document.getElementById('gpsStatus').innerText = '';
+    } else {
+      msg.className = 'mt-3 text-center text-danger fw-bold';
+      msg.innerText = '❌ Error: ' + (res.message || 'Submission failed.');
+    }
+  });
+
+  function loadMasterData() {
+    const script = document.createElement('script');
+    const callbackName = '__sewaMasterData_' + Date.now();
+    window[callbackName] = function(res) {
+      delete window[callbackName];
+      script.remove();
+      if (res && res.success) {
+        masterData = res;
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('brandingForm').style.display = 'block';
+      } else {
+        document.getElementById('loadingSpinner').innerText = 'Master data load nahi ho saka: ' + ((res && res.error) || 'Unknown error');
+      }
+    };
+    script.onerror = function() {
+      delete window[callbackName];
+      document.getElementById('loadingSpinner').innerText = 'Backend se master data load nahi ho saka. Refresh karke dobara try karein.';
+    };
+    script.src = BACKEND_URL + '?action=master&callback=' + callbackName + '&_=' + Date.now();
+    document.body.appendChild(script);
+  }
+
+  function compressPhoto(file) {
+    return new Promise(function(resolve, reject) {
+      const reader = new FileReader();
+      reader.onerror = function() { reject(new Error('Photo read nahi ho paya.')); };
+      reader.onload = function() {
+        const image = new Image();
+        image.onerror = function() { reject(new Error('Photo open nahi ho paya.')); };
+        image.onload = function() {
+          const maxSide = 1400;
+          const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(image.width * scale);
+          canvas.height = Math.round(image.height * scale);
+          const context = canvas.getContext('2d');
+          context.fillStyle = '#ffffff';
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.78).split(',')[1]);
+        };
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  window.onload = function() { getLocation(); loadMasterData(); };
+
+  function getLocation() {
+    const status = document.getElementById('gpsStatus');
+    if (navigator.geolocation) {
+      status.innerText = "Fetching GPS Location...";
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        document.getElementById('latitude').value = pos.coords.latitude;
+        document.getElementById('longitude').value = pos.coords.longitude;
+        status.innerText = "✅ Location captured successfully!";
+        status.className = "gps-status text-success";
+      }, function(err) {
+        status.innerText = "⚠️ Location permission denied or unavailable.";
+        status.className = "gps-status text-danger";
+      });
+    } else {
+      status.innerText = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  function onLocationTypeChange() {
+    const type = document.getElementById('locationType').value;
+    currentDataset = type === 'RURAL' ? masterData.rural : masterData.urban;
+    
+    // Reset dropdowns
+    populateSelect('districtSelect', getUniqueValues(currentDataset, 0));
+    resetSelect('blockSelect', 'Select Block');
+    resetSelect('gpSelect', 'Select GP/City');
+    resetSelect('villageSelect', 'Select Village/Ward');
+  }
+
+  function onDistrictChange() {
+    const dist = document.getElementById('districtSelect').value;
+    const filtered = currentDataset.filter(r => r[0] === dist);
+    if(filtered.length > 0) document.getElementById('districtCode').value = filtered[0][1];
+    
+    populateSelect('blockSelect', getUniqueValues(filtered, 2));
+    resetSelect('gpSelect', 'Select GP/City');
+    resetSelect('villageSelect', 'Select Village/Ward');
+  }
+
+  function onBlockChange() {
+    const dist = document.getElementById('districtSelect').value;
+    const block = document.getElementById('blockSelect').value;
+    const filtered = currentDataset.filter(r => r[0] === dist && r[2] === block);
+    if(filtered.length > 0) document.getElementById('blockCode').value = filtered[0][3];
+
+    populateSelect('gpSelect', getUniqueValues(filtered, 4));
+    resetSelect('villageSelect', 'Select Village/Ward');
+  }
+
+  function onGpChange() {
+    const dist = document.getElementById('districtSelect').value;
+    const block = document.getElementById('blockSelect').value;
+    const gp = document.getElementById('gpSelect').value;
+    const filtered = currentDataset.filter(r => r[0] === dist && r[2] === block && r[4] === gp);
+    if(filtered.length > 0) document.getElementById('gpCityCode').value = filtered[0][5];
+
+    populateSelect('villageSelect', getUniqueValues(filtered, 6));
+  }
+
+  function onVillageChange() {
+    const dist = document.getElementById('districtSelect').value;
+    const block = document.getElementById('blockSelect').value;
+    const gp = document.getElementById('gpSelect').value;
+    const vil = document.getElementById('villageSelect').value;
+    const match = currentDataset.find(r => r[0] === dist && r[2] === block && r[4] === gp && r[6] === vil);
+    if(match) document.getElementById('villageWardCode').value = match[7];
+  }
+
+  function getUniqueValues(arr, index) {
+    return [...new Set(arr.map(item => item[index]))].sort();
+  }
+
+  function populateSelect(id, items) {
+    const select = document.getElementById(id);
+    select.innerHTML = '<option value="">Select Option</option>';
+    items.forEach(item => {
+      const opt = document.createElement('option');
+      opt.value = item;
+      opt.textContent = item;
+      select.appendChild(opt);
+    });
+  }
+
+  function resetSelect(id, placeholder) {
+    const select = document.getElementById(id);
+    select.innerHTML = `<option value="">${placeholder}</option>`;
+  }
+
+async function handleFormSubmit(form) {
+    const btn = document.getElementById('btnSubmit');
+    const msg = document.getElementById('responseMsg');
+    const file = form.elements.photoFile.files[0];
+    if (!file) return;
+    btn.disabled = true;
+    btn.innerText = 'Photo prepare ho rahi hai...';
+    msg.innerText = '';
+    try {
+      const photoData = await compressPhoto(file);
+      const fields = {};
+      new FormData(form).forEach(function(value, key) {
+        if (key !== 'photoFile' && typeof value === 'string') fields[key] = value;
+      });
+      pendingRequestId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2);
+      const payload = Object.assign(fields, {
+        action: 'submit',
+        requestId: pendingRequestId,
+        photoData: { data: photoData, mimeType: 'image/jpeg', name: (file.name || 'branding-photo').replace(/\.[^.]+$/, '') + '.jpg' }
+      });
+      const postForm = document.createElement('form');
+      postForm.method = 'POST';
+      postForm.action = BACKEND_URL;
+      postForm.target = 'backendFrame';
+      postForm.style.display = 'none';
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'payload';
+      input.value = JSON.stringify(payload);
+      postForm.appendChild(input);
+      document.body.appendChild(postForm);
+      btn.innerText = 'Submitting Data... Please wait...';
+      postForm.submit();
+      postForm.remove();
+      submitTimer = setTimeout(function() {
+        btn.disabled = false;
+        btn.innerText = 'Submit Data & Branding Photo';
+        msg.className = 'mt-3 text-center text-danger fw-bold';
+        msg.innerText = 'Submission ka response nahi mila. Network check karke dobara try karein.';
+      }, 60000);
+    } catch (error) {
+      btn.disabled = false;
+      btn.innerText = 'Submit Data & Branding Photo';
+      msg.className = 'mt-3 text-center text-danger fw-bold';
+      msg.innerText = '❌ ' + error.message;
+    }
+  }
+</script>
 
 </body>
 </html>
+
+
+
+
+
